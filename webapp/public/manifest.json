@@ -1,0 +1,23 @@
+{
+  "short_name": "Rosian Weekends",
+  "name": "Rosian Weekends - Weekend travel deals",
+  "description": "Spend your weekends exploring the World!",
+  "dir": "ltr",
+  "lang": "en-GB",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/logo.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/index.html",
+  "background_color": "#ca125a",
+  "theme_color": "#ca125a",
+  "display": "standalone"
+}
+
+
+
+

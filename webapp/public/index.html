@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="theme-color" content="#ca125a">
+    <link rel="manifest" href="<%= BASE_URL %>manifest.json">
+    <link rel="icon" href="<%= BASE_URL %>logo.png">
+    <link rel="preconnect" href="http://fonts.gstatic.com">
+    <link rel="preconnect" href="http://fonts.googleapis.com">
+
+    <!-- <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:400,500,700,400italic|Material+Icons"> -->
+    <title>Rosian Weekends - Weekend travel deals</title>
+    <meta name="Description" content="Travel the World over the weekends! We create city break holiday packages consisting flights and accommodation by searching the web.">
+    <meta property="og:title" content="Rosian Weekends" />
+    <meta property="og:description" content="Travel the World over the weekends! We create city break holiday packages consisting flights and accommodation by searching the web.">
+    <meta property="og:url" content="https://weekend.rosian.org">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="en_GB">
+    <meta property="og:site_name" content="Rosian">
+
+
+
+  </head>
+  <body>
+    <noscript>
+      <strong>We're sorry but this page doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+    </noscript>
+
+    <!-- Fixing redirect issue when hosting on S3 -->
+    <script>history.pushState({}, "Application entry", location.hash.substring(2));</script>
+
+
+    <!-- Loading roboto font and material icons async -->
+    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
+    <script>
+        WebFont.load({
+            google: {
+                families: ['Roboto:400,500,700,400italic', 'Material+Icons']
+            }
+        });
+    </script>
+
+
+    <!-- Install service worker if needed -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/sw.js').then(function(registration) {
+                    // Registration was successful
+                    console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                }, function(err) {
+                    // registration failed :(
+                    console.log('ServiceWorker registration failed: ', err);
+                });
+            });
+        }
+    </script>
+
+
+    <div id="app">
+    </div>
+    <!-- built files will be auto injected -->
+  </body>
+</html>
