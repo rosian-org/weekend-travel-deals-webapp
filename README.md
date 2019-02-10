@@ -18,3 +18,6 @@ Rosian Weekends allows you to browse 'weekend city break' type holidays.
 # Assets
 - The project uses public domain images from commons.wikimedia.org and wikipedia.org for the destination images.
 - Rosian's logo also included in the source code, but we do not provide you license to use it. (it serves as a placeholder for your logo)
+
+#Status
+Under active development (as of Feb 2019). Your contribution is welcomed!

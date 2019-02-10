@@ -8,13 +8,21 @@
     <v-flex xs12 sm6 m4 lg4 xl3>
       <v-card max-width="450" min-width="300">
         <v-img
-          :src="'destination-images/' + deal.tripDestination + '.jpg'"
+          :src="'destination-images/' + deal.destinationCity + '.jpg'"
           alt="placeholder"
-        ></v-img>
+        >
+                <v-layout fill-height column ma-0 style="background-image: linear-gradient(to top, rgba(0, 0, 0, 1) 4%, transparent 72px);">
+                    <v-spacer></v-spacer>
+                    <v-flex class="text-xs-right" shrink >
+                         <h2 class="headline mb-0" style="color: #FFEBEE;margin-bottom:0px; " >{{deal.destCountry}}</h2>
+                    </v-flex>
+                </v-layout>
+            
+        </v-img>
 
         <v-card-title primary-title>
           <div>
-            <h3 class="headline mb-0">{{ deal.tripDestination }}</h3>
+            <h3 class="headline mb-0">{{ deal.destinationCity }}</h3>
           </div>
         </v-card-title>
 
@@ -27,9 +35,9 @@
                         <v-icon>event</v-icon>
                     </v-list-tile-avatar>
                     <v-list-tile-content>
-                        {{deal.departureDay}} {{deal.departureMonthShort}} - 
+                        {{deal.departureDay}} {{deal.departureMonthShort}}  - 
                         {{deal.returnDay}} {{deal.returnMonthShort}} 
-                        ({{ deal.lengthOfStay}} days)
+                        ({{deal.departureDayEn}} - {{deal.returnDayEn}})
                     </v-list-tile-content>
                 </v-list-tile>
 
@@ -38,8 +46,8 @@
                         <v-icon>flight</v-icon>
                     </v-list-tile-avatar>
                     <v-list-tile-content>
-                        {{deal.departureCity}} ({{deal.departureAirportCode}}) - 
-                        {{deal.destinationCity}} ({{deal.destinationAirportCode}})
+                        {{deal.departureCity}}  - 
+                        {{deal.destinationCity}} ({{deal.departureAirportCode}} - {{deal.destinationAirportCode}})
                     </v-list-tile-content>
                 </v-list-tile>
 
@@ -48,7 +56,17 @@
                         <v-icon>hotel</v-icon>
                     </v-list-tile-avatar>
                     <v-list-tile-content>
-                        {{deal.accommodationName}}
+                        {{deal.accommodationName}} ({{deal.accommodationStarRating}})
+                    </v-list-tile-content>
+                </v-list-tile>
+
+                
+                <v-list-tile>
+                    <v-list-tile-avatar>
+                        <v-icon>{{travellerIcon}}</v-icon>
+                    </v-list-tile-avatar>
+                    <v-list-tile-content>
+                        <div>{{deal.numberOfAdults}} Adult {{travellerString}}</div>
                     </v-list-tile-content>
                 </v-list-tile>
 
@@ -58,7 +76,7 @@
                         <v-icon>local_offer</v-icon>
                     </v-list-tile-avatar>
                     <v-list-tile-content>
-                        <div class="font-weight-bold">£{{deal.priceTotalAllInclusive}} - Total price for 1 adult</div>
+                        <div class="font-weight-bold">£{{deal.priceTotalAllInclusive}} - Total trip price</div>
                     </v-list-tile-content>
                 </v-list-tile>
 
@@ -66,57 +84,26 @@
             <!-- END Trip details -->
 
             <!-- START search modul -->
+            <!-- General search button 
             <div class="text-xs-center text-sm-center text-lg-center text-xl-center">
                     <a href="https://rosian.org" target="_blank" rel="noopener">
                         <v-btn large color="primary" dark>Search on Rosian</v-btn>
                     </a>
                 
+            </div> -->
+            <div class="text-xs-center text-sm-center text-lg-center text-xl-center">
+                    <a :href="`${deal.flightBookingLink}`" target="_blank" rel="noopener">
+                        <v-btn large color="primary" dark>Book flights</v-btn>
+                    </a>
+                    <a :href="`${deal.hotelBookingLink}`" target="_blank" rel="noopener">
+                        <v-btn large color="primary" dark>Book Accommodation</v-btn>
+                    </a>
             </div>
             <!-- END search modul -->
 
       </v-card>
     </v-flex>
   <!-- </v-layout> -->
-
-    <!--
-    <md-card md-with-hover>
-        <md-card-media>
-            <img :src="deal.tripDestination + '.jpg'" alt="placeholder">
-        </md-card-media>
-        <md-card-content>
-            <div class="md-title">{{ deal.tripDestination }}</div>
-            <div class="md-subhead"><strong>{{ deal.lengthOfStay}} Days
-            </strong> ({{deal.departureDay}} {{deal.departureMonthShort}} - {{deal.returnDay}} {{deal.returnMonthShort}})</div>
-            <div class="md-subhead"><strong>{{deal.departureCity}} ({{deal.departureAirportCode}})</strong> to
-                <strong>{{deal.destinationCity}} ({{deal.destinationAirportCode}})</strong></div>
-            <div class="md-subhead">Staying at: {{deal.accommodationName}}</div>
-
-                <strong class="md-headline">£{{deal.priceTotalAllInclusive}}</strong><br>
-                Total price for 1 adult<br>
-            <div id="treeplantmsg">
-                <md-icon id="treeIcon">nature_people</md-icon> We plant {{ Math.floor(deal.priceTotalAllInclusive * 0.1)}} trees
-            </div>
-
-            
-            <div class="flip-container">
-                <div class="flipper">
-                    <div class="front"> 
-                        <md-button v-on:click="flipMe($event)">Reserve package</md-button>       
-                    </div>
-                    <div class="back">                 
-                        <br>                    
-                        <p align="left">You will need to make three separate bookings for your trip:</p>
-                        <a target="_blank" :href="deal.urlReturnFlightBook">Flight out (£{{deal.priceFlightOut}})</a> <br>
-                        <a target="_blank" :href="deal.urlDepartureFlightBook">Flight back (£{{deal.priceFlightBack}})</a> <br>
-                        <a target="_blank" :href="deal.urlHotelBook">Accommodation (£{{deal.priceAccommodation}})</a> <br>
-                    </div>
-                </div>
-            </div>
-            
-
-           </md-card-content>
-    </md-card>
-    -->
 
 
 </template>
@@ -131,6 +118,26 @@
         },
         methods: {
         },
+
+        computed : {
+            travellerString : function()
+            {
+                if(this.deal.numberOfAdults.toString() == "1")
+                    return "traveller"
+                else
+                    return "travellers"
+            },
+            travellerIcon : function()
+            {
+                if(this.deal.numberOfAdults.toString() == "1")
+                    return "person"
+                else
+                    return "people"
+            }
+
+        },
+
+
         name: "dealcardv1"
     }
 </script>
