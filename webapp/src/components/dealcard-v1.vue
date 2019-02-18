@@ -93,10 +93,10 @@
             </div> -->
             <div class="text-xs-center text-sm-center text-lg-center text-xl-center">
                     <a :href="`${deal.flightBookingLink}`" target="_blank" rel="noopener">
-                        <v-btn large color="primary" dark>Book flights</v-btn>
+                        <v-btn large color="primary" dark>Book flights (£{{deal.flightTotalPrice}})</v-btn>
                     </a>
                     <a :href="`${deal.hotelBookingLink}`" target="_blank" rel="noopener">
-                        <v-btn large color="primary" dark>Book Accommodation</v-btn>
+                        <v-btn large color="primary" dark>Book Accommodation (£{{deal.priceAccommodation}})</v-btn>
                     </a>
             </div>
             <!-- END search modul -->

@@ -1,5 +1,5 @@
 <template>
-  <v-app id="inspire" style="background-color: #FFEBEE;">
+  <v-app id="inspire" style="background-color: #fff1f4;">
 
     <!-- START Nav panel (filters) -->
     <v-navigation-drawer v-model="drawer" width="250" fixed right clipped-right app style="background-color: #FFEBEE;">     
@@ -112,6 +112,10 @@
         </v-list-tile>
       </v-list>
 
+      <div class="text-xs-center text-sm-center text-lg-center text-xl-center hidden-lg-and-up">
+            <v-btn large color="primary" dark @click.stop="drawer = !drawer">Done</v-btn>           
+      </div>
+
     </v-navigation-drawer>
     <!-- START Nav panel (filters) -->
 
@@ -119,16 +123,19 @@
     <!-- START header -->
     <v-toolbar color="primary" dark fixed app>
       
-      
-      <v-img src="https://rosian.org/images/rosian-logo-with-text-horizontal.gif" max-width="130" min-width="80"></v-img>
-      
+      <a href="https://rosian.org" target="_blank" rel="noopener">
+        <v-img src="https://rosian.org/images/rosian-logo-with-text-horizontal.gif" max-width="130" min-width="80"></v-img>
+      </a>
+
       <v-toolbar-title>Weekends</v-toolbar-title>
       
       <div>
         &nbsp;&nbsp;(Beta)
       </div>
       <v-spacer></v-spacer>
-      <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
+      <v-toolbar-side-icon @click.stop="drawer = !drawer">
+        <v-icon>filter_list</v-icon>
+      </v-toolbar-side-icon>
     </v-toolbar>
     <!-- END header -->
     
@@ -158,6 +165,11 @@
              Sorry, but we don't have a deal matching your search. Try removing some of the filters. 
              <v-icon>beach_access</v-icon>
           </h1>
+
+              <br><br>
+             <v-btn large :class="overFilteringCsss" @click="removeAllFilters" justify-center align-center>
+              <v-icon>highlight_off</v-icon> Remove all filters
+            </v-btn>
         </v-layout>
         <!-- END overfiltering message -->
 
@@ -306,11 +318,17 @@ export default {
 
             var currentbucket = 1;
             var bucketcounter = 0;
+            var budgetValue = 0;
+
             for (var i in this.deals) {
                 this.deals[i].budgetBucket = currentbucket;
                 bucketcounter++;
-                if(bucketcounter == bucketsize)
+                if(bucketcounter == (bucketsize - 1))
                 {
+                    //Adding label for the filter ranges
+                    this.filterBudget[currentbucket]['fText'] = "£" + budgetValue.toString() + " - £" + this.deals[i].priceTotalAllInclusive.toString();
+                    budgetValue = this.deals[i].priceTotalAllInclusive;
+                  
                     currentbucket++;
                     bucketcounter = 0;
                 }
@@ -395,6 +413,8 @@ export default {
             this.filterStars = newFiltStars;
         },
 
+
+
         refreshDepartureWeekdayFilterOptions : function()
         {
             var days = new Set()
@@ -464,7 +484,7 @@ export default {
 
         filterAppliedHandler : function(setPageNumberToDefault=true)
         {
-
+            
             if(setPageNumberToDefault == true)
             {
               this.numDealsToShowNow = this.defaultDealsNumberPerPage;
@@ -595,6 +615,32 @@ export default {
             {
                 this.showAllDealsCss = "";
             }
+        },
+
+        removeAllFilters : function()
+        {
+          /*
+            this.filterAdultSelected = this.filterAdult[0];
+            this.filterDestinationSelected = this.filterDestinations[0];
+            this.filterDepartureSelected = this.filterDeparture[0];
+            this.filterDepartureWeekdaySelected = this.filterDepartureWeekday[0];
+            this.filterStarsSelected = this.filterStars[0];
+            this.filterDepWeekSelected = this.filterDepWeek[0];
+            this.filterDepartureWeekSelected = this.filterDepartureWeek[0];
+            this.filterBudgetSelected = this.filterBudget[0];
+          */
+
+            this.filterAdultSelected = "Any";
+            this.filterDestinationSelected = "Any";
+            this.filterDepartureSelected = "Any";
+            this.filterDepartureWeekdaySelected = "Any";
+            this.filterStarsSelected = "Any";
+            this.filterDepWeekSelected = "Any";
+            this.filterDepartureWeekSelected = "Any";
+            this.filterBudgetSelected = 0;
+
+
+            this.filterAppliedHandler();
         },
 
 

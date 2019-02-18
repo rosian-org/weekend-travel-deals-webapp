@@ -1,0 +1,8 @@
+18 Feb 2019:
+- Logo at navbar linked to Rosian.org
+- Hamburger icon replaced with Filter icon as the related panel contains only filters.
+- Filter section received a "Done" button for breakpoints smaller than LG. This allows easier closing the panel once user finished with filtering
+- The background colour of the deal cards is lighter than the filters. This is a visual guide for the user for the two seperate section of the page.
+- Added "Remove all filters" button when the Overfiltering event happens.
+- Price breakdown displayed on the buttons (prices for flight and accommodation, not just the overall)
+- Budget filter received more intuitive labels: price ranges (numbers).
