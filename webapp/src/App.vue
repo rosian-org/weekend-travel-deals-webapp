@@ -14,9 +14,42 @@
       </v-list>
     </v-toolbar>
 
-      <v-list style="padding-top:20px;">
+
+      <h2 style="margin-top:25px;margin-left:17px;margin-right:17px;font-weight:normal;font-size:16px;text-align:center;margin-bottom:10px">
+        Departure date</h2>
+      <!--
+      <v-text-field
+            label="Departure date"
+            
+            style="margin-top:15px;margin-left:17px;margin-right:17px;"
+            disabled="true"
+          >
+      </v-text-field>
+      -->
+
+      <v-date-picker 
+      v-model="dateSelected" 
+      scrollable 
+      show-current="false"
+      first-day-of-week="1" 
+      no-title width="180" 
+      :allowed-dates="allowedDates"
+      style="padding-left:17px;margin-left:17px;margin-right:20px;padding-right:20px;"
+      >
+            
+            <v-btn style="padding-left:20px;" flat icon 
+            small color="primary" @click="dateSelected = null;filterAppliedHandler()">Clear date</v-btn>
+            <v-spacer></v-spacer>
+            <v-btn style="padding-right:20px;"
+            flat icon small color="primary" @click="filterAppliedHandler()">Filter date</v-btn>
+      </v-date-picker>
+
+      <v-list style="padding-top:5px;">
+        <!--
         <v-list-tile>
-          <!-- Departure Week Filter -->
+          <-- Departure Week Filter --
+
+          
             <v-select
             label="Departure Week"
             prepend-icon="date_range"
@@ -27,10 +60,12 @@
             v-on:input="filterAppliedHandler()"
             >
             </v-select>
+            
+
         </v-list-tile>
 
         <v-list-tile style="padding-top:20px;">
-          <!-- Departure Weekday Filter -->
+          <-- Departure Weekday Filter --
             <v-select
             label="Departure Weekday"
             prepend-icon="today"
@@ -42,7 +77,8 @@
             >
             </v-select>
         </v-list-tile>
-        
+        -->
+
         <v-list-tile style="padding-top:30px;">
           <!-- Departure Filter -->
             <v-select
@@ -180,9 +216,10 @@
 
 
     <!-- START Footer -->
+    <!--
     <v-footer color="primary" app>
       <span class="white--text" style="padding-left:10px;">Travel the World over the weekends!</span>
-    </v-footer>
+    </v-footer> -->
     <!-- END Footer -->
 
   </v-app>
@@ -243,6 +280,15 @@ export default {
       showAllDealsCss: "", //set to "d-none" to hide the "how more deals" button. Should be in sync with "showAllDeals" boolean.
       overFilteringCsss : "d-none", //hides the overfiltering message if contains "d-none" 
 
+      calendarDepDates : ["2019-03-08", "2019-03-14", "2019-03-15"],
+      dateSelected: null,
+
+
+      /*temp for calendar test
+      menu: false,
+      modal: false,
+      menu2: false*/
+
     }),
 
       created(){
@@ -287,9 +333,10 @@ export default {
 
                 this.refreshDestinationFilterOptions();
                 this.refreshDepartureFilterOptions();
-                this.refreshDepartureWeekdayFilterOptions();
+                //this.refreshDepartureWeekdayFilterOptions();
                 this.refreshAccommodationClassFilterOptions();
                 this.refreshAdultFilterOptions();
+                this.refreshDepartureCalendarOptions();
                 
                 //this.refreshDepWeekFilterOptions();
 
@@ -302,6 +349,23 @@ export default {
 
    methods: 
    {
+
+        refreshDepartureCalendarOptions : function()
+        {
+            var depdates = new Set()
+
+            for (var i in this.deals) {
+                depdates.add(this.deals[i].departDateYYYYMMDD);
+            }
+
+            this.calendarDepDates = Array.from(depdates);
+        },
+
+        /*Returns true if the date is allowed for departure date selection */
+        allowedDates: function(val)
+        {
+            return this.calendarDepDates.indexOf(val) !== -1;
+        },
 
         /*
          Assigns a budget category for each trip which the user can apply filter to
@@ -537,10 +601,19 @@ export default {
             }
 
             /* Filtering based on departure weekday (e.g Fri) */
+            /*
             if(this.filterDepartureWeekdaySelected !== "Any") //Check for "Any"
             {
                 newdisp = newdisp.filter(a => a.departureDayEn == this.filterDepartureWeekdaySelected);
             }
+            */
+
+           //Filtering based on departure DATE
+           if(this.dateSelected !== null) //Check for "Any"
+            {
+                newdisp = newdisp.filter(a => a.departDateYYYYMMDD == this.dateSelected);
+            }
+
 
             /* Filtering based on number of travellers */
             if(this.filterAdultSelected !== "Any") //Check for "Any"
@@ -552,6 +625,7 @@ export default {
             //Expects input as "1" for day and "Jan" for month
             // Returns the week of the year
             // This may have a bug around new year time
+            /*
             function getWeekOfYear(day, month, currentWeek=false)
             {
                 var d;
@@ -573,9 +647,10 @@ export default {
 
                 //console.log('WeekOfTheYear: ', day,"-",month," ",currentWeek," - result: ", result, "; d=", d);
                 return result
-            }
+            }*/
 
             /* Filtering based on departure week */
+            /*
             if(this.filterDepartureWeekSelected !== "Any") //Check for "Any"
             {
                 if(this.filterDepartureWeekSelected == "This week")
@@ -586,8 +661,60 @@ export default {
                   newdisp = newdisp.filter(a => getWeekOfYear(a.departureDay,a.departureMonthShort,false) == (getWeekOfYear(0,0,true)+2) );
                 if(this.filterDepartureWeekSelected == "Three weeks ahead")
                   newdisp = newdisp.filter(a => getWeekOfYear(a.departureDay,a.departureMonthShort,false) == (getWeekOfYear(0,0,true)+3) );
-            }
+            }*/
 
+
+            //!!!!! SORTING START !!!!!!!!/
+            //Applying basic sorting: each destination's cheapest option first
+            var de = []
+            this.filterDestinations.forEach(function(e) 
+            {
+                if(e['fText'] !== "Any"){
+                de.push(e['fText']);
+                }
+            });
+            var orig_length = de.length;
+            for(var ix=0;ix<orig_length;ix++)
+            {
+                //Is this destination available in the current results
+                if(newdisp.filter(a => a.destinationCity == de[ix]).length>0)
+                {
+                    //console.log('Search for:  ', de[ix]);
+                    //FIND THE CHEAPEST AND MOVE IT TO THE FIRST PLACE
+                    // We know that items are already sorted by price right now
+                    for(var z=ix;z<newdisp.length;z++)
+                    {
+                      if(newdisp[z].destinationCity == de[ix])
+                      {
+                        //console.log('Found ', de[ix]);
+                        //Found it, let's swap with what we have now
+                        var stemp = newdisp[ix];
+                        newdisp[ix] = newdisp[z];
+                        newdisp[z] = stemp;
+                        break;
+                      }
+                    }
+                }
+                else
+                {
+                  continue;
+                }
+            }
+            /*
+            for(var i=0;i<orig_length-1;i++)
+              //Sorry for bubbling, this is very little N though :)
+            {
+                for(var j=i+1;j<orig_length;j++)
+                {
+                  if(newdisp[j].priceTotalAllInclusive < newdisp[i].priceTotalAllInclusive)
+                  {
+                        stemp = newdisp[i];
+                        newdisp[i] = newdisp[j];
+                        newdisp[j] = stemp;
+                  }
+                }
+              }*/
+            //!!!!! SORTING END !!!!!!!!/
 
             /* Update visible list of deals and Apply pagination */
             //console.log("Newdisp length: ", newdisp.length)

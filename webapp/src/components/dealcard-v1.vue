@@ -22,41 +22,48 @@
 
         <v-card-title primary-title>
           <div>
-            <h3 class="headline mb-0">{{ deal.destinationCity }}</h3>
+            <h3 class="headline mb-0">
+                
+                        {{deal.departureCity}}
+                        <v-icon >compare_arrows</v-icon>
+                        {{ deal.destinationCity }}
+            </h3>
           </div>
         </v-card-title>
 
         
             <!-- START Trip details -->
-            <v-list>
+            <v-list dense >
 
-                <v-list-tile>
+                
+                <v-list-tile style="margin-bottom:10px;">
                     <v-list-tile-avatar>
-                        <v-icon>event</v-icon>
+                        <v-icon >flight_takeoff</v-icon>
                     </v-list-tile-avatar>
-                    <v-list-tile-content>
-                        {{deal.departureDay}} {{deal.departureMonthShort}}  - 
-                        {{deal.returnDay}} {{deal.returnMonthShort}} 
-                        ({{deal.departureDayEn}} - {{deal.returnDayEn}})
+                    <v-list-tile-content style="font-size:14px;">
+                         {{deal.departureDay}} {{deal.departureMonthShort}},
+                         {{deal.departTimeLeave}} - {{deal.departTimeArrive}} 
+                         ({{deal.departureDayEn}}), <br />{{deal.departureCity}} ({{deal.departureAirportCode}})
                     </v-list-tile-content>
                 </v-list-tile>
 
-                <v-list-tile>
+                <v-list-tile style="margin-bottom:10px;">
                     <v-list-tile-avatar>
-                        <v-icon>flight</v-icon>
+                        <v-icon style="transform: scaleX(-1);">flight_takeoff</v-icon>
                     </v-list-tile-avatar>
-                    <v-list-tile-content>
-                        {{deal.departureCity}}  - 
-                        {{deal.destinationCity}} ({{deal.departureAirportCode}} - {{deal.destinationAirportCode}})
+                    <v-list-tile-content style="font-size:14px;">
+                        {{deal.returnDay}} {{deal.returnMonthShort}}, 
+                        {{deal.arriveTimeLeave}} - {{deal.arriveTimeArrive}} 
+                        ({{deal.returnDayEn}}), <br/>{{deal.destinationCity}} ({{deal.destinationAirportCode}})
                     </v-list-tile-content>
                 </v-list-tile>
 
-                <v-list-tile>
+                <v-list-tile style="margin-bottom:10px;">
                     <v-list-tile-avatar>
                         <v-icon>hotel</v-icon>
                     </v-list-tile-avatar>
-                    <v-list-tile-content>
-                        {{deal.accommodationName}} ({{deal.accommodationStarRating}})
+                    <v-list-tile-content class="text-truncate" style="font-size:14px;">
+                        {{deal.accommodationName}}<br/>({{deal.accommodationStarRating}})
                     </v-list-tile-content>
                 </v-list-tile>
 
@@ -65,7 +72,7 @@
                     <v-list-tile-avatar>
                         <v-icon>{{travellerIcon}}</v-icon>
                     </v-list-tile-avatar>
-                    <v-list-tile-content>
+                    <v-list-tile-content style="font-size:14px;">
                         <div>{{deal.numberOfAdults}} Adult {{travellerString}}</div>
                     </v-list-tile-content>
                 </v-list-tile>
