@@ -4,6 +4,11 @@ Rosian Weekends allows you to browse 'weekend city break' type holidays.
 # Screenshot
 <img src="https://weekend.rosian.org/screenshot-git.png" width="350">
 
+# User research
+A user research was conducted about the usability of this application (state during Feb-Mar 2019). See the full results 
+
+<a href="https://github.com/rosian-org/weekend-travel-deals-webapp/blob/master/user-research-21032019.pdf">here</a>.
+
 # Tech stack & Features
 - Progressive Web App (PWA), Single page
 - Vue.JS
@@ -17,7 +22,7 @@ Rosian Weekends allows you to browse 'weekend city break' type holidays.
 - Rosian's logo also included in the source code, but we do not provide you license to use it. (it serves as a placeholder for your logo)
 
 # Status
-Under active development (as of Feb 2019). Your contribution is welcomed!
+Under active development (as of March 2019). Your contribution is welcomed!
 
 
 # Data source
